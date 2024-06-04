@@ -27,7 +27,9 @@ def mapper(data_frame: pd.DataFrame) -> tuple[str, float]:
 
 def read_text_from_image(image_path: str, language: str = "eng") -> tuple[str, float]:
     data = pytesseract.image_to_data(
-        image_path, lang=language, output_type=pytesseract.Output.DATAFRAME
+        image_path,
+        lang=language,
+        output_type=pytesseract.Output.DATAFRAME,
     )
     mapped_data = mapper(data)
     return mapped_data

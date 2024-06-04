@@ -1,4 +1,4 @@
-# OCR
+# OCR Email extracter
 
 ## Install dependencies
 

@@ -1,6 +1,11 @@
 from readers.tesseract import read_text_from_image as tesseract_reader
 from readers.easyocr_reader import read_text_from_image as easyocr_reader
-from utils import calculate_predicted_accuracy, parse_args
+from utils import (
+    calculate_predicted_accuracy,
+    parse_args,
+    extract_emails,
+    format_emails,
+)
 from validators.gpt2 import validate_text
 from constants import EASYOCR_CHARACTER
 
@@ -11,8 +16,11 @@ def main(image_path: str, output_path: str, model: str, validate: bool = False):
     else:
         text, confident = tesseract_reader(image_path)
 
+    extracted_emails = extract_emails(text)
+    formatted_emails = format_emails(extracted_emails)
+
     with open(output_path, "w") as f:
-        f.write(text)
+        f.write(formatted_emails)
 
     print(f"Confident: {confident:.2f}%")
 
