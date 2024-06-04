@@ -1,4 +1,5 @@
 import argparse
+import re
 
 
 from constants import EMPIRICAL_PERPLEXITY, EASYOCR_CHARACTER, TESSERACT_CHARACTER
@@ -8,6 +9,16 @@ def calculate_predicted_accuracy(perplexity: float):
     coefficient = 1 - perplexity / EMPIRICAL_PERPLEXITY
     accuracy = max(coefficient, 0)
     return accuracy * 100
+
+
+def extract_emails(text: str) -> list[str]:
+    email_pattern = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
+    email_list = re.findall(email_pattern, text)
+    return email_list
+
+
+def format_emails(email_list: list[str]) -> str:
+    return "\n".join(email_list)
 
 
 def parse_args():
